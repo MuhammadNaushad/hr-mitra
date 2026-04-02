@@ -1,0 +1,26 @@
+<div class="card mt-5 mb-5">
+  <div class="card-body">
+    <h2 class="text-center">Employee List</h2>
+  </div>
+</div>
+<div>
+  <%= link_to 'Create New Employee', new_employee_path ,class: 'btn btn-primary btn-lg mb-5' %>
+</div>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%=employee.get_name%></td>
+        <td><%=employee.email%></td>
+        <td><%=employee.get_address%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
