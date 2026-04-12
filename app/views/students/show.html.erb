@@ -1,0 +1,23 @@
+<div class="card mt-5 mb-5 col-lg-12">
+  <div class="card-body">
+    <h2 class="text-center">Student Details</h2>
+  </div>
+  <div class="row mt-5">
+    <div class="col-lg-6">
+      <h3 class="mb-5">Personal Information</h3>
+      <p class="lead"><strong>Name: </strong>
+        <%= @student.name %>
+      </p>
+      <p class="lead"><strong>Roll No: </strong>
+        <%= @student.roll_no %>
+      </p>
+      <p class="lead"><strong>Email: </strong>
+        <%= @student.email %>
+      </p>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <%= link_to 'Edit Student', edit_student_path(@student), class:"btn btn-primary rounded-0" %>
+    <%= link_to 'Back to Student', students_path, class:"btn btn-outline-primary rounded-0" %>
+  </div>
+</div>

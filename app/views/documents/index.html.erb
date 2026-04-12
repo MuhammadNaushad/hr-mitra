@@ -1,36 +1,35 @@
 <%= flash[:success] %>
 <div class="card mt-5 mb-5">
   <div class="card-body">
-    <h2 class="text-center">Employee List</h2>
+    <h2 class="text-center">Documents List</h2>
   </div>
 </div>
 <div>
-  <%= link_to 'Create New Employee', new_employee_path ,class: 'btn btn-primary btn-lg mb-5' %>
+  <%= link_to 'Create New Document', new_document_path ,class: 'btn btn-primary btn-lg mb-5' %>
 </div>
 <table class="table table-bordered">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Email</th>
-      <th>Address</th>
-      <th>Action</th>
+      <th>Doc Type</th>
+      <th>Employee ID</th>
     </tr>
   </thead>
   <tbody>
-    <% @employees.each do |employee| %>
+    <% @documents.each do |document| %>
       <tr>
-        <td><%= employee.get_name %></td>
-        <td><%= employee.email %></td>
-        <td><%= employee.get_address %></td>
+        <td><%= document.name %></td>
+        <td><%= document.doc_type %></td>
+        <td><%= link_to document.employee.get_name, employee_path(document.employee) %></td>
         <td>
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               Actions
             </button>
             <ul class="dropdown-menu">
-              <li><%= link_to 'Edit', edit_employee_path(employee), class:'dropdown-item' %></li>
-              <li><%= link_to 'View', employee_path(employee), class:'dropdown-item' %></li>
-              <li><%= link_to 'Delete', employee_path(employee),
+              <li><%= link_to 'Edit', edit_document_path(document), class:'dropdown-item' %></li>
+              <li><%= link_to 'View', document_path(document), class:'dropdown-item' %></li>
+              <li><%= link_to 'Delete', document_path(document),
                   data: { turbo_method: :delete, turbo_confirm: 'Are you sure? want to delete this employee' },
                   class: 'dropdown-item' %>
               </li>

@@ -1,0 +1,18 @@
+<div
+  class="card mt-5 mb-5 align-content-center"
+>
+  <div class="card-body">
+    <h2 class="ml-5 text-center">
+      Edit Student
+    </h2>
+  </div>
+</div>
+<%# if @student.errors.any? %>
+<!-- <div class="col-lg-12"> -->
+<!-- <p>Please fix the below errors</p> -->
+<%# @student.errors.full_messages.each do |message| %>
+  <!-- <p class="text-danger"><%#= message %></p> -->
+  <%# end %>
+  <!-- </div> -->
+  <%# end %>
+  <%= render 'form', student: @student %>

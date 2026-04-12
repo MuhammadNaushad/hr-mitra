@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
 
   resources :employees
+  resources :students
+  resources :documents
 
   # public pages routes
   get "about-us"=> "pages#about_us"

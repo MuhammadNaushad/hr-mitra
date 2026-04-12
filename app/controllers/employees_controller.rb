@@ -1,54 +1,63 @@
 class EmployeesController < ApplicationController
-  before_action :find_user, except: [ :index, :new, :create ]
+  before_action :set_employee, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @employees = Employee.all
   end
 
   def show
+    # @employee= Employee.find(params[:id])
   end
 
   def new
-    @employees = Employee.new
+    @employee = Employee.new
   end
 
   def edit
   end
 
   def create
-    @employees = Employee.new(params[:user])
-    if @employees.save
+    @employee = Employee.new(employee_params)
+
+    if @employee.save
       flash[:success] = "Employee successfully created"
-      redirect_to @employees
+      redirect_to employees_path
     else
+      puts @employee.errors.full_messages
       flash[:error] = "Something went wrong"
-      render "new"
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    if @employees.update_attributes(params[:user])
+    if @employee.update(employee_params)
       flash[:success] = "Employee was successfully updated"
-      redirect_to @employees
+      redirect_to employees_path
     else
       flash[:error] = "Something went wrong"
-      render "edit"
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    if @employees.destroy
-      flash[:success] = "Employee was successfully deleted"
-      redirect_to @employees_path
-    else
-      flash[:error] = "Something went wrong"
-      redirect_to @employees_path
-    end
+    @employee.destroy
+    flash[:success] = "Employee was successfully deleted"
+    redirect_to employees_path
   end
 
   private
 
-    def find_user
-      @employees = Employee.find(params[:id])
-    end
+  def set_employee
+    @employee = Employee.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => error
+    flash[:success] = error
+    redirect_to employees_path
+  end
+
+  def employee_params
+    params.require(:employee).permit(
+      :first_name, :middle_name, :last_name,
+      :email, :address, :state, :country
+    )
+  end
 end

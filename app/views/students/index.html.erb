@@ -1,0 +1,53 @@
+<%= flash[:success] %>
+<div
+  class="card mt-5 mb-5 align-content-center"
+>
+  <div class="card-body">
+    <h2 class="ml-5 text-center">
+      Students List
+    </h2>
+  </div>
+</div>
+<div class="row col-4">
+  <%= link_to 'Create New Student', new_student_path ,class: 'btn btn-primary mb-4' %>
+</div>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Roll No</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @students.each do |student| %>
+      <tr>
+        <td>
+          <%= student.name %>
+        </td>
+        <td>
+          <%= student.email %>
+        </td>
+        <td>
+          <%= student.roll_no %>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Actions
+            </button>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'Edit', edit_student_path(student), class:'dropdown-item' %></li>
+              <li> <%= link_to 'View', student_path(student), class:'dropdown-item' %></li>
+              <li><%= link_to 'Delete', student_path(student),
+                  data: { turbo_method: :delete, turbo_confirm: 'Are you sure? want to delete this student' },
+                  class: 'dropdown-item' %>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
