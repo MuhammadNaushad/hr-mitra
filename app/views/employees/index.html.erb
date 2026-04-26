@@ -7,37 +7,98 @@
 <div>
   <%= link_to 'Create New Employee', new_employee_path ,class: 'btn btn-primary btn-lg mb-5' %>
 </div>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Address</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @employees.each do |employee| %>
+<div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    View List in
+  </button>
+  <ul class="dropdown-menu">
+    <li><%= link_to 'Table', employees_path(view_type: 'table'), class:'dropdown-item' %></li>
+    <li><%= link_to 'Accordion', employees_path(view_type: 'accordian'), class:'dropdown-item' %></li>
+  </ul>
+</div>
+<% if params[:view_type]!='accordian' %>
+  <table class="table table-bordered">
+    <thead>
       <tr>
-        <td><%= employee.get_name %></td>
-        <td><%= employee.email %></td>
-        <td><%= employee.get_address %></td>
-        <td>
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Actions
-            </button>
-            <ul class="dropdown-menu">
-              <li><%= link_to 'Edit', edit_employee_path(employee), class:'dropdown-item' %></li>
-              <li><%= link_to 'View', employee_path(employee), class:'dropdown-item' %></li>
-              <li><%= link_to 'Delete', employee_path(employee),
+        <th>Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @employees.each do |employee| %>
+        <tr>
+          <td><%= employee.get_name %></td>
+          <td><%= employee.email %></td>
+          <td><%= employee.get_address %></td>
+          <td>
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Actions
+              </button>
+              <ul class="dropdown-menu">
+                <li><%= link_to 'Edit', edit_employee_path(employee), class:'dropdown-item' %></li>
+                <li><%= link_to 'View', employee_path(employee), class:'dropdown-item' %></li>
+                <li><%= link_to 'Delete', employee_path(employee),
                   data: { turbo_method: :delete, turbo_confirm: 'Are you sure? want to delete this employee' },
                   class: 'dropdown-item' %>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+<% if params[:view_type].present? && params[:view_type]=='accordian' %>
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <% @employees.each_with_index do |employee, index| %>
+        <h2 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#<%= index %>" aria-expanded="true" aria-controls="<%= index %>">
+            <%= employee.name_with_email %>
+          </button>
+        </h2>
+        <div id="<%= index %>" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <h3 class="mb-5">Personal Information</h3>
+                <p class="lead"><strong>First Name: </strong>
+                  <%= employee.first_name %>
+                </p>
+                <!-- <p class="lead"><strong>Middle Name: </strong> -->
+                <%#= @employee.middle_name.present? ? @employee.middle_name : "NA" %>
+                <!-- </p> -->
+                <p class="lead"><strong>Last Name: </strong>
+                  <%= employee.last_name %>
+                </p>
+                <p class="lead"><strong>Email: </strong>
+                  <%= employee.email %>
+                </p>
+              </div>
+              <div class="col-lg-6">
+                <h3 class="mb-5">Address Information</h3>
+                <p class="lead"><strong>State: </strong>
+                  <%= employee.state %>
+                </p>
+                <p class="lead"><strong>Country: </strong>
+                  <%= employee.country %>
+                </p>
+                <p class="lead"><strong>Address: </strong>
+                  <%= employee.address %>
+                </p>
+              </div>
+            </div>
+            <%= link_to 'Edit', edit_employee_path(employee), class:'btn btn-primary' %>
+            <%= link_to 'Delete', employee_path(employee),
+                  data: { turbo_method: :delete, turbo_confirm: 'Are you sure? want to delete this employee' },
+                  class: 'btn btn-danger' %>
           </div>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

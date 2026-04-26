@@ -73,6 +73,42 @@
         <% end %>
       </div>
     </div>
+    <div class="col-lg-6 ">
+      <div class="form-group">
+        <%= form.label :date_of_birth ,class: 'mb-2' %>
+        <%= form.date_field :date_of_birth, class: 'form-control form-control-lg rounded-0' %>
+        <% employee.errors.full_messages_for(:date_of_birth).each do |msg| %>
+          <p class="text-danger"><%= msg %></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-lg-6 ">
+      <div class="form-group">
+        <%= form.label :date_of_joining ,class: 'mb-2' %>
+        <%= form.date_field :date_of_joining, class: 'form-control form-control-lg rounded-0' %>
+        <% employee.errors.full_messages_for(:date_of_joining).each do |msg| %>
+          <p class="text-danger"><%= msg %></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-lg-6 ">
+      <div class="form-group">
+        <%= form.label :job_title ,class: 'mb-2' %>
+        <%= form.text_field :job_title, class: 'form-control form-control-lg rounded-0' %>
+        <% employee.errors.full_messages_for(:job_title).each do |msg| %>
+          <p class="text-danger"><%= msg %></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-lg-12 ">
+      <div class="form-group">
+        <%= form.label :bio ,class: 'mb-2' %>
+        <%= form.text_area :bio , class: 'form-control form-control-lg rounded-0', row: '5' %>
+        <% employee.errors.full_messages_for(:bio).each do |msg| %>
+          <p class="text-danger"><%= msg %></p>
+        <% end %>
+      </div>
+    </div>
   </div>
   <div
       class="row justify-content-center align-items-center"
